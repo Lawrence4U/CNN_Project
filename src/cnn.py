@@ -191,9 +191,6 @@ class CNN(nn.Module):
 
         plt.show()
 
-    
-
-        
 
 def load_data(train_dir, valid_dir, batch_size, img_size):
     """Load and transform the training and validation datasets.
