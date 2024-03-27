@@ -87,7 +87,7 @@ class CNN(nn.Module):
 
             history = {'train_loss': [], 'train_accuracy': [], 'valid_loss': [], 'valid_accuracy': []}
             device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-            print(device)
+            # print(device)
             for epoch in range(epochs):
                 self.train()
                 train_loss = 0.0
