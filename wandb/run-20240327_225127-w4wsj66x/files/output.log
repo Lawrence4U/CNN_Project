@@ -1,0 +1,6 @@
+cuda:0
+cuda:0
+Epoch 1/2 - Train Loss: 2.6412, Train Accuracy: 0.3062
+Epoch 1/2 - Validation Loss: 2.5322, Validation Accuracy: 0.3960
+Epoch 2/2 - Train Loss: 2.4272, Train Accuracy: 0.5055
+Epoch 2/2 - Validation Loss: 2.3491, Validation Accuracy: 0.5733

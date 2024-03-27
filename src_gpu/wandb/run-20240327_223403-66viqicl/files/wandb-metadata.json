@@ -1,0 +1,52 @@
+{
+    "os": "Windows-10-10.0.22631-SP0",
+    "python": "3.11.8",
+    "heartbeatAt": "2024-03-27T21:34:03.994890",
+    "startedAt": "2024-03-27T21:34:03.144996",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "<python with no main file>",
+    "codePathLocal": null,
+    "git": {
+        "remote": "https://github.com/Lawrence4U/CNN_Project.git",
+        "commit": "670f6800428e9f329e476e7ad6310bc55d497e19"
+    },
+    "email": "allorenzocastro@gmail.com",
+    "root": "C:/Users/Alvaro/Desktop/CNN_Project",
+    "host": "DESKTOP-8NE16ID",
+    "username": "Alvaro",
+    "executable": "c:\\Users\\Alvaro\\Desktop\\CNN_Project\\venv\\Scripts\\python.exe",
+    "cpu_count": 6,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 4701.0,
+        "min": 0.0,
+        "max": 4701.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 4701.0,
+            "min": 0.0,
+            "max": 4701.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 930.7434501647949,
+            "used": 382.16728591918945
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 4070",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 4070",
+            "memory_total": 12878610432
+        }
+    ],
+    "memory": {
+        "total": 31.188552856445312
+    }
+}
