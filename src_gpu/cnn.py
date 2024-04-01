@@ -14,7 +14,7 @@ import time
 class CNN(nn.Module):
     """Convolutional Neural Network model for image classification."""
     
-    def __init__(self, base_model, num_classes, unfreezed_layers=0):
+    def __init__(self, base_model, num_classes, unfreezed_layers=0, device=None):
         """CNN model initializer.
 
         Args:
@@ -26,7 +26,10 @@ class CNN(nn.Module):
         super().__init__()
         self.base_model = base_model
         self.num_classes = num_classes
-
+        if device:
+            self.device = device
+        else:
+            self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         # Freeze convolutional layers
         for param in self.base_model.parameters():
             param.requires_grad = False
@@ -86,15 +89,13 @@ class CNN(nn.Module):
             torch.save(self.state_dict(), best_model_path)
 
             history = {'train_loss': [], 'train_accuracy': [], 'valid_loss': [], 'valid_accuracy': []}
-            device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-            # print(device)
             for epoch in range(epochs):
                 self.train()
                 train_loss = 0.0
                 train_accuracy = 0.0
                 for images, labels in train_loader:
-                    images = images.to(device)
-                    labels = labels.to(device)
+                    images = images.to(self.device)
+                    labels = labels.to(self.device)
 
                     optimizer.zero_grad()
                     outputs = self(images)
@@ -118,8 +119,8 @@ class CNN(nn.Module):
                 valid_loss = 0.0
                 valid_accuracy = 0.0
                 for images, labels in valid_loader:
-                    images = images.to(device)
-                    labels = labels.to(device)
+                    images = images.to(self.device)
+                    labels = labels.to(self.device)
 
                     outputs = self(images)
                     loss = criterion(outputs, labels)
@@ -155,10 +156,9 @@ class CNN(nn.Module):
         """
         self.eval()
         predicted_labels = []
-        device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
         for images, _ in data_loader:
-            images = images.to(device)
+            images = images.to(self.device)
             outputs = self(images)
             predicted_labels.extend(outputs.argmax(1).tolist())
         return predicted_labels

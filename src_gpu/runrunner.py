@@ -52,22 +52,22 @@ def run_model(config=None):
                 "valid_loss": valid_loss})
 
 sweep_configuration = {
-    "name": "sweepdemo",
+    "name": "sweep",
     "method": "bayes",
     "metric": {"goal": "minimize", "name": "valid_loss"},
     "parameters": {
-        "learning_rate": {"value": 1e-4},
-        "batch_size": {"values": [16, 32, 64]},
-        "epochs": {"values": [5, 10]},
-        "optimizer": {"value": "adam"},
+        "learning_rate": {"min": 0.0001, "max": 0.1},
+        "batch_size": {"values": [16, 32, 64, 128]},
+        "epochs": {"values": [5, 10, 20, 50, 100]},
+        "optimizer": {"values": ["adam","sgd"]},
         "model": {"value": "resnet50"},
         "weights": {"value": "DEFAULT"},
         "criterion": {"value": "CrossEntropyLoss"},
-        "unfrozen_layers": {"value": 0},
+        "unfrozen_layers": {"values": [0,1,2]},
     },
 }
 
-sweep_id = wandb.sweep(sweep_configuration, project="pytorch-sweeps-demo")
+sweep_id = wandb.sweep(sweep_configuration, project="cnn_sweep")
 wandb.agent(sweep_id, run_model)
 wandb.finish()
 
