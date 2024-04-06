@@ -44,30 +44,35 @@ def run_model(config=None):
         train_acc = history["train_accuracy"][-1]
         valid_loss = history["valid_loss"][-1]
         valid_acc = history["valid_accuracy"][-1]
-
-
-        wandb.log({"train_acc": train_acc,
-                "train_loss": train_loss,
-                "valid_acc": valid_acc,
-                "valid_loss": valid_loss})
+        
+        for epoch in range(config.epochs):
+            wandb.log({
+                "train_acc": history["train_accuracy"][epoch],
+                "train_loss": history["train_loss"][epoch],
+                "valid_acc": history["valid_accuracy"][epoch],
+                "valid_loss": history["valid_loss"][epoch]
+            },
+                step=epoch+1         
+            )
+            
 
 sweep_configuration = {
     "name": "sweep",
-    "method": "bayes",
+    "method": "grid",
     "metric": {"goal": "minimize", "name": "valid_loss"},
     "parameters": {
-        "learning_rate": {"min": 0.0001, "max": 0.1},
-        "batch_size": {"values": [16, 32, 64, 128]},
-        "epochs": {"values": [5, 10, 20, 50, 100]},
-        "optimizer": {"values": ["adam","sgd"]},
+        "learning_rate": {"value": 1e-4},
+        "batch_size": {"value": 64},
+        "epochs": {"value": 300},
+        "optimizer": {"value": "adam"},
         "model": {"value": "resnet50"},
         "weights": {"value": "DEFAULT"},
         "criterion": {"value": "CrossEntropyLoss"},
-        "unfrozen_layers": {"values": [0,1,2]},
+        "unfrozen_layers": {"values": [0,5,10]},
     },
 }
 
-sweep_id = wandb.sweep(sweep_configuration, project="cnn_sweep")
+sweep_id = wandb.sweep(sweep_configuration, project="cnn_param_selection")
 wandb.agent(sweep_id, run_model)
 wandb.finish()
 
