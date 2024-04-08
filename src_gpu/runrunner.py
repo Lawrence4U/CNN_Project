@@ -40,10 +40,10 @@ def run_model(config=None):
         optimizer = build_optimizer(model,config.optimizer,config.learning_rate)
         criterion = build_criterion(config.criterion)
         history = model.train_model(train_loader, valid_loader, optimizer, criterion, epochs=config.epochs)
-        train_loss = history["train_loss"][-1]
-        train_acc = history["train_accuracy"][-1]
-        valid_loss = history["valid_loss"][-1]
-        valid_acc = history["valid_accuracy"][-1]
+        # train_loss = history["train_loss"][-1]
+        # train_acc = history["train_accuracy"][-1]
+        # valid_loss = history["valid_loss"][-1]
+        # valid_acc = history["valid_accuracy"][-1]
         
         for epoch in range(config.epochs):
             wandb.log({
@@ -54,21 +54,21 @@ def run_model(config=None):
             },
                 step=epoch+1         
             )
-            
+    model.save(f'resnet-{config.epoch}')     
 
 sweep_configuration = {
     "name": "sweep",
     "method": "grid",
     "metric": {"goal": "minimize", "name": "valid_loss"},
     "parameters": {
-        "learning_rate": {"value": 1e-4},
-        "batch_size": {"value": 64},
-        "epochs": {"value": 300},
+        "learning_rate": {"value": 1e-4},        
+        "batch_size": {"values": [64,128]},
+        "epochs": {"value": 100},
         "optimizer": {"value": "adam"},
         "model": {"value": "resnet50"},
         "weights": {"value": "DEFAULT"},
         "criterion": {"value": "CrossEntropyLoss"},
-        "unfrozen_layers": {"values": [0,5,10]},
+        "unfrozen_layers": {"value": 5},
     },
 }
 
