@@ -62,8 +62,8 @@ sweep_configuration = {
     "metric": {"goal": "minimize", "name": "valid_loss"},
     "parameters": {
         "learning_rate": {"value": 1e-4},        
-        "batch_size": {"values": [64,128]},
-        "epochs": {"value": 100},
+        "batch_size": {"value": 128},
+        "epochs": {"value": 200},
         "optimizer": {"value": "adam"},
         "model": {"value": "resnet50"},
         "weights": {"value": "DEFAULT"},
